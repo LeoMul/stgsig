@@ -446,7 +446,13 @@ program stgsig24
                 
                     do i = 1,ion_include
                         read(5,*) levelnum,pseudo_indicator
-                        ion_included_levels(i) = pseudo_indicator
+
+                        if (levelnum .gt. nast) then
+                            print*,'Specified level number > NAST'
+                            stop
+                        end if 
+
+                        ion_included_levels(levelnum) = pseudo_indicator
                     end do  
 
                 else
@@ -719,9 +725,9 @@ program stgsig24
             end do 
     
             close(2)
-    210     format(200es16.6)
+    210     format(2000es16.6)
     220     format('#e- energy(',a6,')  CS (',a14,')')
-    230     format('   #Transition: '20(i6,' - ',i6,' '))
+    230     format('   #Transition: '2000(i6,' - ',i6,' '))
 
         end subroutine
 
