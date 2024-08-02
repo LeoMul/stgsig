@@ -245,7 +245,13 @@ program stgsig24
 
             read(1,*) NZED,NELEC 
             read(1,*) NAST,NUM_POINTS,NUM_TRAN 
-    
+            !nast*(nast-1)/2 =  no elastic
+            !assume no eleastic for now
+            if ((NAST*(NAST-1)/2) .ne. NUM_TRAN) then 
+                write(*,110) NUM_TRAN, (NAST*(NAST-1)/2)
+                stop
+            end if
+
             print*,'found nuclear charge: ',NZED
             print*,'found num electrons : ',NELEC
             print*,'found num bound stat: ',NAST
@@ -301,6 +307,10 @@ program stgsig24
 
             print*,'-------------------------------------'
             100 format (' OMEGA read time: ',F5.1,' seconds.')
+
+            110 format ('Number of transitions unexpected. \n & 
+                        This code assumes no elastic transitions. & 
+                        Found transitions ',i6, 'expected (NAST*(NAST-1)/2) = ',i6)
     
         end subroutine
 
